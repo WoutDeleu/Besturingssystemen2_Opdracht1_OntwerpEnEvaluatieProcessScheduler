@@ -3,8 +3,9 @@ public class Process {
     private long servicetime;
 
     private long endtime;
-    private long tat;
     private long waittime;
+    private long tat;
+    private long genTat;
 
     public Process(long arrivaltime, long servicetime) {
         this.arrivaltime = arrivaltime;

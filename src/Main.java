@@ -24,9 +24,18 @@ public class Main {
         //Remark: we work only with the processes3 from now on. If you experience memory problems, you can use the smaller lists.
 
         //Groop in percentages
-        List<Process> clusters = new ArrayList<>(100);
-        makeClusters(clusters, processes3);     //Opm: normally the cluster are right, but there is no way to check...
+        List<Process> clusters1 = new ArrayList<>(100);
+        List<Process> clusters2 = new ArrayList<>(100);
+        List<Process> clusters3 = new ArrayList<>(100);
+
+        makeClusters(clusters1, processes1);
+        makeClusters(clusters2, processes2);
+        makeClusters(clusters3, processes3);     //Opm: normally the cluster are right, but there is no way to check...
         //So if a fault is encountered, it is a possibility it is in here
+
+        //SchedulingAlgorithms
+        //1. FCFS
+
 
         //Plotten: JFreeChart
     }
