@@ -9,10 +9,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -21,7 +18,9 @@ public class Main {
         List<Process> processes2 = new ArrayList<>(20000);
         List<Process> processes3 = new ArrayList<>(50000);
         inlezenXML(processes1, processes2, processes3);
-        //Remark: we work only with the processes3 from now on. If you experience memory problems, you can use the smaller lists.
+        Collections.sort(processes1, new ServiceTimeComparator());
+
+
 
         //Groop in percentages
         List<Process> clusters1 = new ArrayList<>(100);
@@ -32,6 +31,7 @@ public class Main {
         makeClusters(clusters2, processes2);
         makeClusters(clusters3, processes3);     //Opm: normally the cluster are right, but there is no way to check...
         //So if a fault is encountered, it is a possibility it is in here
+
 
         //SchedulingAlgorithms
         //1. FCFS
