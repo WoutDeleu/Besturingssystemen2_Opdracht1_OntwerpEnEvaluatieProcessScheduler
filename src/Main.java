@@ -72,36 +72,9 @@ public class Main {
             NodeList nodeList2 = doc2.getElementsByTagName("process");
             NodeList nodeList3 = doc3.getElementsByTagName("process");
 
-
-            for(int i=0; i<nodeList1.getLength(); i++) {
-                Node node = nodeList1.item(i);
-                if(node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element) node;
-                    processes1.add(Integer.parseInt(eElement.getElementsByTagName("pid").item(0).getTextContent())-1, new Process(
-                            Long.parseLong(eElement.getElementsByTagName("arrivaltime").item(0).getTextContent()),
-                            Long.parseLong(eElement.getElementsByTagName("servicetime").item(0).getTextContent())));
-                }
-            }
-
-            for(int i=0; i<nodeList2.getLength(); i++) {
-                Node node = nodeList2.item(i);
-                if(node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element) node;
-                    processes2.add(Integer.parseInt(eElement.getElementsByTagName("pid").item(0).getTextContent())-1, new Process(
-                            Long.parseLong(eElement.getElementsByTagName("arrivaltime").item(0).getTextContent()),
-                            Long.parseLong(eElement.getElementsByTagName("servicetime").item(0).getTextContent())));
-                }
-            }
-
-            for(int i=0; i<nodeList3.getLength(); i++) {
-                Node node = nodeList3.item(i);
-                if(node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element) node;
-                    processes3.add(Integer.parseInt(eElement.getElementsByTagName("pid").item(0).getTextContent())-1, new Process(
-                            Long.parseLong(eElement.getElementsByTagName("arrivaltime").item(0).getTextContent()),
-                            Long.parseLong(eElement.getElementsByTagName("servicetime").item(0).getTextContent())));
-                }
-            }
+            addProcesses(nodeList1, processes1);
+            addProcesses(nodeList2, processes2);
+            addProcesses(nodeList3, processes3);
         }
         catch (ParserConfigurationException e) {
             e.printStackTrace();
@@ -109,6 +82,18 @@ public class Main {
             e.printStackTrace();
         } catch (SAXException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void addProcesses(NodeList nodeList, List<Process> processes) {
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element eElement = (Element) node;
+                processes.add(Integer.parseInt(eElement.getElementsByTagName("pid").item(0).getTextContent()) - 1, new Process(
+                        Long.parseLong(eElement.getElementsByTagName("arrivaltime").item(0).getTextContent()),
+                        Long.parseLong(eElement.getElementsByTagName("servicetime").item(0).getTextContent())));
+            }
         }
     }
 }
