@@ -16,11 +16,38 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
+        //Read data
         List<Process> processes1 = new ArrayList<>(10000);
         List<Process> processes2 = new ArrayList<>(20000);
         List<Process> processes3 = new ArrayList<>(50000);
-
         inlezenXML(processes1, processes2, processes3);
+        //Remark: we work only with the processes3 from now on. If you experience memory problems, you can use the smaller lists.
+
+        //Groop in percentages
+        List<Process> clusters = new ArrayList<>(100);
+        makeClusters(clusters, processes3);
+
+        //Plotten: JFreeChart
+    }
+
+
+    public static void makeClusters(List<Process> clusters, List<Process> processes) {
+        int amountPerCluster = processes.size()/100;
+        int procesCounter = 0;
+        for(int i = 0; i<clusters.size(); i++) {
+            int temp = 0;
+            int pid = 0;
+            int arrivaltime = 0;
+            int servicetime = 0;
+            while(temp<amountPerCluster) {
+                pid = pid + processes.get(procesCounter).getPid();
+                arrivaltime = arrivaltime + processes.get(procesCounter).getArrivaltime();
+                servicetime = servicetime + processes.get(procesCounter).getServicetime();
+                temp++;
+                procesCounter++;
+            }
+            clusters.add(i, new Process(pid/amountPerCluster, arrivaltime/amountPerCluster, servicetime/amountPerCluster));
+        }
     }
 
     public static void inlezenXML(List<Process> processes1, List<Process> processes2, List<Process> processes3) {
