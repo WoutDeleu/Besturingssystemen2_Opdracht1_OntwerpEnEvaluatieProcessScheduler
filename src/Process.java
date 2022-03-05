@@ -1,27 +1,21 @@
 public class Process {
-    private int pid;
-    private int arrivaltime;
-    private int servicetime;
+    private long arrivaltime;
+    private long servicetime;
 
-    private int endtime;
-    private int tat;
-    private int waittime;
+    private long endtime;
+    private long tat;
+    private long waittime;
 
-    public Process(int pid, int arrivaltime, int servicetime) {
-        this.pid = pid;
+    public Process(long arrivaltime, long servicetime) {
         this.arrivaltime = arrivaltime;
         this.servicetime = servicetime;
     }
 
-    public int getPid() {
-        return pid;
-    }
-
-    public int getArrivaltime() {
+    public long getArrivaltime() {
         return arrivaltime;
     }
 
-    public int getServicetime() {
+    public long getServicetime() {
         return servicetime;
     }
 }

@@ -25,7 +25,8 @@ public class Main {
 
         //Groop in percentages
         List<Process> clusters = new ArrayList<>(100);
-        makeClusters(clusters, processes3);
+        makeClusters(clusters, processes3);     //Opm: normally the cluster are right, but there is no way to check...
+        //So if a fault is encountered, it is a possibility it is in here
 
         //Plotten: JFreeChart
     }
@@ -34,19 +35,17 @@ public class Main {
     public static void makeClusters(List<Process> clusters, List<Process> processes) {
         int amountPerCluster = processes.size()/100;
         int procesCounter = 0;
-        for(int i = 0; i<clusters.size(); i++) {
+        for(int i = 0; i<100; i++) {
             int temp = 0;
-            int pid = 0;
-            int arrivaltime = 0;
-            int servicetime = 0;
+            long arrivaltime = 0;
+            long servicetime = 0;
             while(temp<amountPerCluster) {
-                pid = pid + processes.get(procesCounter).getPid();
                 arrivaltime = arrivaltime + processes.get(procesCounter).getArrivaltime();
                 servicetime = servicetime + processes.get(procesCounter).getServicetime();
                 temp++;
                 procesCounter++;
             }
-            clusters.add(i, new Process(pid/amountPerCluster, arrivaltime/amountPerCluster, servicetime/amountPerCluster));
+            clusters.add(i, new Process(arrivaltime/amountPerCluster, servicetime/amountPerCluster));
         }
     }
 
@@ -73,14 +72,14 @@ public class Main {
             NodeList nodeList2 = doc2.getElementsByTagName("process");
             NodeList nodeList3 = doc3.getElementsByTagName("process");
 
+
             for(int i=0; i<nodeList1.getLength(); i++) {
                 Node node = nodeList1.item(i);
                 if(node.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) node;
                     processes1.add(Integer.parseInt(eElement.getElementsByTagName("pid").item(0).getTextContent())-1, new Process(
-                            Integer.parseInt(eElement.getElementsByTagName("pid").item(0).getTextContent()),
-                            Integer.parseInt(eElement.getElementsByTagName("arrivaltime").item(0).getTextContent()),
-                            Integer.parseInt(eElement.getElementsByTagName("servicetime").item(0).getTextContent())));
+                            Long.parseLong(eElement.getElementsByTagName("arrivaltime").item(0).getTextContent()),
+                            Long.parseLong(eElement.getElementsByTagName("servicetime").item(0).getTextContent())));
                 }
             }
 
@@ -89,9 +88,8 @@ public class Main {
                 if(node.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) node;
                     processes2.add(Integer.parseInt(eElement.getElementsByTagName("pid").item(0).getTextContent())-1, new Process(
-                            Integer.parseInt(eElement.getElementsByTagName("pid").item(0).getTextContent()),
-                            Integer.parseInt(eElement.getElementsByTagName("arrivaltime").item(0).getTextContent()),
-                            Integer.parseInt(eElement.getElementsByTagName("servicetime").item(0).getTextContent())));
+                            Long.parseLong(eElement.getElementsByTagName("arrivaltime").item(0).getTextContent()),
+                            Long.parseLong(eElement.getElementsByTagName("servicetime").item(0).getTextContent())));
                 }
             }
 
@@ -100,9 +98,8 @@ public class Main {
                 if(node.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) node;
                     processes3.add(Integer.parseInt(eElement.getElementsByTagName("pid").item(0).getTextContent())-1, new Process(
-                            Integer.parseInt(eElement.getElementsByTagName("pid").item(0).getTextContent()),
-                            Integer.parseInt(eElement.getElementsByTagName("arrivaltime").item(0).getTextContent()),
-                            Integer.parseInt(eElement.getElementsByTagName("servicetime").item(0).getTextContent())));
+                            Long.parseLong(eElement.getElementsByTagName("arrivaltime").item(0).getTextContent()),
+                            Long.parseLong(eElement.getElementsByTagName("servicetime").item(0).getTextContent())));
                 }
             }
         }
