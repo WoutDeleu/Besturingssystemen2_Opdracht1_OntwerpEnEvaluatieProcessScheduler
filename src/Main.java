@@ -35,8 +35,8 @@ public class Main {
 
         //SchedulingAlgorithms
         //1. FCFS
-
-
+        fCFS(processes3);
+        //2.
         //Plotten: JFreeChart
     }
 
@@ -103,6 +103,26 @@ public class Main {
                         Long.parseLong(eElement.getElementsByTagName("arrivaltime").item(0).getTextContent()),
                         Long.parseLong(eElement.getElementsByTagName("servicetime").item(0).getTextContent())));
             }
+        }
+    }
+
+    private static void fCFS(List<Process> processes) {
+        int c = 0;
+        long currentEndTime = 0;
+        for(Process p : processes){
+            if(c == 0) {
+                p.setWaittime(0);
+            }
+            else {
+                if (currentEndTime - p.getArrivaltime() < 0) p.setWaittime(0);
+                else p.setWaittime(currentEndTime - p.getArrivaltime());
+            }
+            currentEndTime = p.getArrivaltime()+p.getServicetime()+p.getWaittime();
+            p.setEndtime(currentEndTime);
+            p.setStarttime(p.getArrivaltime()+p.getWaittime());
+            p.setTat(p.getServicetime()+p.getWaittime());
+            p.setGenTat(p.getTat()/p.getServicetime());
+            c++;
         }
     }
 }
