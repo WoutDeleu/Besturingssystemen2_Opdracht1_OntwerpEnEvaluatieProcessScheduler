@@ -19,6 +19,8 @@ public class Main {
         List<Process> processes3 = new ArrayList<>(50000);
         inlezenXML(processes1, processes2, processes3);
         Collections.sort(processes1, new ServiceTimeComparator());
+        Collections.sort(processes2, new ServiceTimeComparator());
+        Collections.sort(processes3, new ServiceTimeComparator());
 
 
 
