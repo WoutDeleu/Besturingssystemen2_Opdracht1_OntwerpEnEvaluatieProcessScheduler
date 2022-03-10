@@ -24,6 +24,23 @@ public class Main {
 
 
 
+             //Opm: normally the cluster are right, but there is no way to check...
+        //So if a fault is encountered, it is a possibility it is in here
+
+
+        //SchedulingAlgorithms
+        //1. FCFS
+        List<Process> fcfs = processes3;
+        fCFS(fcfs);
+        //2.
+        List<Process> rr_2 = processes3;
+        List<Process> rr_4 = processes3;
+        List<Process> rr_8 = processes3;
+        rr(rr_2,2);
+        rr(rr_4,4);
+        rr(rr_8,8);
+
+
         //Groop in percentages
         List<Process> clusters1 = new ArrayList<>(100);
         List<Process> clusters2 = new ArrayList<>(100);
@@ -31,14 +48,8 @@ public class Main {
 
         makeClusters(clusters1, processes1);
         makeClusters(clusters2, processes2);
-        makeClusters(clusters3, processes3);     //Opm: normally the cluster are right, but there is no way to check...
-        //So if a fault is encountered, it is a possibility it is in here
+        makeClusters(clusters3, processes3);
 
-
-        //SchedulingAlgorithms
-        //1. FCFS
-        fCFS(processes3);
-        //2.
         //Plotten: JFreeChart
     }
 
@@ -125,6 +136,13 @@ public class Main {
             p.setTat(p.getServicetime()+p.getWaittime());
             p.setGenTat(p.getTat()/p.getServicetime());
             c++;
+        }
+    }
+
+    private static void rr(List<Process> rr, int q) {
+        List<Process> queue = new LinkedList<>();
+        for(int i = 0; i<rr.size(); i++) {
+
         }
     }
 }
