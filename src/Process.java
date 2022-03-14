@@ -8,6 +8,8 @@ public class Process {
     private long tat;
     private long genTat;
 
+
+
     public Process(long arrivaltime, long servicetime) {
         this.arrivaltime = arrivaltime;
         this.servicetime = servicetime;
@@ -27,6 +29,10 @@ public class Process {
 
     public long getTat() {
         return tat;
+    }
+
+    public long getGenTat() {
+        return genTat;
     }
 
     public void setWaittime(long waittime){

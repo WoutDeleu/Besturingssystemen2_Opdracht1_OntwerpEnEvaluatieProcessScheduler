@@ -4,6 +4,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import org.jfree.ui.RefineryUtilities;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -18,58 +20,42 @@ public class Main {
         List<Process> processes2 = new ArrayList<>(20000);
         List<Process> processes3 = new ArrayList<>(50000);
         inlezenXML(processes1, processes2, processes3);
-        Collections.sort(processes1, new ServiceTimeComparator());
-        Collections.sort(processes2, new ServiceTimeComparator());
-        Collections.sort(processes3, new ServiceTimeComparator());
 
 
-
-             //Opm: normally the cluster are right, but there is no way to check...
+        //Opm: normally the cluster are right, but there is no way to check...
         //So if a fault is encountered, it is a possibility it is in here
 
 
         //SchedulingAlgorithms
         //1. FCFS
-        List<Process> fcfs = processes3;
-        fCFS(fcfs);
-        //2.
+        FCFS fcfs = new FCFS();
+        List<Process> fcfs_res = fcfs.fCFS(processes3);
+        Collections.sort(fcfs_res, new ServiceTimeComparator());
+        List<Process> cluster = new ArrayList<>(100);
+        makeClusters(cluster, fcfs_res);
+
+        //Print Global Variables
+        //Glob_par: { gem_omlooptijd, gem_gen_omlooptijd, gem_wachttijd }
+        long[] glob_par = calculate_averages(cluster);
+        printResult(glob_par);
+
+        //plotten
+        plot(cluster);
+
+
+
+/*        //2. RR
         List<Process> rr_2 = processes3;
         List<Process> rr_4 = processes3;
         List<Process> rr_8 = processes3;
         rr(rr_2,2);
         rr(rr_4,4);
-        rr(rr_8,8);
+        rr(rr_8,8);*/
 
-
-        //Groop in percentages
-        List<Process> clusters1 = new ArrayList<>(100);
-        List<Process> clusters2 = new ArrayList<>(100);
-        List<Process> clusters3 = new ArrayList<>(100);
-
-        makeClusters(clusters1, processes1);
-        makeClusters(clusters2, processes2);
-        makeClusters(clusters3, processes3);
 
         //Plotten: JFreeChart
     }
 
-
-    public static void makeClusters(List<Process> clusters, List<Process> processes) {
-        int amountPerCluster = processes.size()/100;
-        int procesCounter = 0;
-        for(int i = 0; i<100; i++) {
-            int temp = 0;
-            long arrivaltime = 0;
-            long servicetime = 0;
-            while(temp<amountPerCluster) {
-                arrivaltime = arrivaltime + processes.get(procesCounter).getArrivaltime();
-                servicetime = servicetime + processes.get(procesCounter).getServicetime();
-                temp++;
-                procesCounter++;
-            }
-            clusters.add(i, new Process(arrivaltime/amountPerCluster, servicetime/amountPerCluster));
-        }
-    }
 
     public static void inlezenXML(List<Process> processes1, List<Process> processes2, List<Process> processes3) {
         try {
@@ -119,30 +105,50 @@ public class Main {
         }
     }
 
-    private static void fCFS(List<Process> processes) {
-        int c = 0;
-        long currentEndTime = 0;
-        for(Process p : processes){
-            if(c == 0) {
-                p.setWaittime(0);
+    public static void makeClusters(List<Process> clusters, List<Process> processes) {
+        int amountPerCluster = processes.size()/100;
+        int procesCounter = 0;
+        for(int i = 0; i<100; i++) {
+            int temp = 0;
+            long arrivaltime = 0;
+            long servicetime = 0;
+            while(temp<amountPerCluster) {
+                arrivaltime = arrivaltime + processes.get(procesCounter).getArrivaltime();
+                servicetime = servicetime + processes.get(procesCounter).getServicetime();
+                temp++;
+                procesCounter++;
             }
-            else {
-                if (currentEndTime - p.getArrivaltime() < 0) p.setWaittime(0);
-                else p.setWaittime(currentEndTime - p.getArrivaltime());
-            }
-            currentEndTime = p.getArrivaltime()+p.getServicetime()+p.getWaittime();
-            p.setEndtime(currentEndTime);
-            p.setStarttime(p.getArrivaltime()+p.getWaittime());
-            p.setTat(p.getServicetime()+p.getWaittime());
-            p.setGenTat(p.getTat()/p.getServicetime());
-            c++;
+            clusters.add(i, new Process(arrivaltime/amountPerCluster, servicetime/amountPerCluster));
         }
     }
 
-    private static void rr(List<Process> rr, int q) {
-        List<Process> queue = new LinkedList<>();
-        for(int i = 0; i<rr.size(); i++) {
-
+    private static long[] calculate_averages(List<Process> cluster) {
+        long gem_omlooptijd=0, gem_gen_omlooptijd=0, gem_wachttijd = 0;
+        for(int i =0; i<100; i++) {
+            Process current = cluster.get(i);
+            gem_omlooptijd = current.getTat() + gem_omlooptijd;
+            gem_gen_omlooptijd = current.getGenTat() + gem_gen_omlooptijd;
+            gem_wachttijd = current.getWaittime() + gem_wachttijd;
         }
+        gem_omlooptijd = gem_omlooptijd/100;
+        gem_gen_omlooptijd = gem_gen_omlooptijd/100;
+        gem_wachttijd = gem_wachttijd/100;
+        long[] ret = { gem_omlooptijd, gem_gen_omlooptijd, gem_wachttijd };
+        return ret;
     }
+
+    private static void printResult(long[] glob_par) {
+        System.out.println("De gemiddelde omlooptijd is " + glob_par[0] + " JIFFIY's");
+        System.out.println("De gemiddelde genormaliseerde omlooptijd is " + glob_par[1] + " JIFFIY's");
+        System.out.println("De gemiddelde wachttijd is " + glob_par[2] + " JIFFIY's");
+    }
+
+
+    private static void plot(List<Process> cluster) {
+        XYLineChart_AWT chart = new XYLineChart_AWT("Processes", "Processes", cluster);
+        chart.pack( );
+        RefineryUtilities.centerFrameOnScreen( chart );
+        chart.setVisible( true );
+    }
+
 }
