@@ -31,34 +31,40 @@ public class Main {
 
         //SchedulingAlgorithms
 
-        //1. Schedulers.FCFS
+        //1. Schedulers
+
+        // FCFS
+
         FCFS fcfs = new FCFS();
-        List<Process> fcfs_res = fcfs.schedule(processes3);
+        List<Process> fcfs_res = new ArrayList<>(fcfs.schedule(processes3));
 
         Collections.sort(fcfs_res, new ServiceTimeComparator());
         makeClusters(cluster, fcfs_res);
 
-        //Print Global Variables
-        //Glob_par: { gem_omlooptijd, gem_gen_omlooptijd, gem_wachttijd }
         long[] glob_par = calculate_averages(cluster);
+        System.out.println("1. FCFS");
         printResult(glob_par);
 
-        //plotten
         plot(cluster, "FCFS");
 
 
+        for(Process p : processes3) p.reset();
+
         //2.SJN (=SPN)
         SJF sjf = new SJF();
-        List<Process> sjf_res = sjf.schedule(processes3);
+        List<Process> sjf_res = new ArrayList<>(sjf.schedule(processes3));
+
+        Collections.sort(sjf_res, new ServiceTimeComparator());
         makeClusters(cluster, sjf_res);
 
         glob_par = calculate_averages(cluster);
+        System.out.println("2. SJN");
         printResult(glob_par);
 
         plot(cluster, "SJN/SPN");
 
 
-        //Plotten: JFreeChart
+
     }
 
 
@@ -148,12 +154,15 @@ public class Main {
         return ret;
     }
 
+    //Print Global Variables
+    //Glob_par: { gem_omlooptijd, gem_gen_omlooptijd, gem_wachttijd }
     private static void printResult(long[] glob_par) {
         System.out.println("De gemiddelde omlooptijd is " + glob_par[0] + " JIFFIY's");
         System.out.println("De gemiddelde genormaliseerde omlooptijd is " + glob_par[1] + " JIFFIY's");
         System.out.println("De gemiddelde wachttijd is " + glob_par[2] + " JIFFIY's");
+        System.out.println();
+        System.out.println();
     }
-
 
     private static void plot(List<Process> cluster, String titel) {
         XYLineChart_AWT chart = new XYLineChart_AWT(titel, titel, cluster);

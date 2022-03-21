@@ -5,9 +5,7 @@ import Basics.Process;
 import java.util.List;
 
 public class FCFS {
-    public FCFS() {
-
-    }
+    public FCFS() { }
 
     public List<Process> schedule(List<Process> temp) {
         List<Process> processes = temp;

@@ -27,6 +27,14 @@ public class Process {
         this.genTat = genTat;
     }
 
+    public void reset() {
+        this.starttime = 0;
+        this.endtime = 0;
+        this.waittime = 0;
+        this.tat = 0;
+        this.genTat = 0;
+    }
+
     public long getArrivaltime() {
         return arrivaltime;
     }
@@ -65,5 +73,13 @@ public class Process {
 
     public void setStarttime(long starttime) {
         this.starttime = starttime;
+    }
+
+    public long getStarttime() {
+        return starttime;
+    }
+
+    public long getEndtime() {
+        return endtime;
     }
 }
