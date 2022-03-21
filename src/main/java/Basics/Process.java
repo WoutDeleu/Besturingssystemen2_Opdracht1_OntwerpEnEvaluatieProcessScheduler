@@ -3,6 +3,7 @@ package Basics;
 import Schedulers.*;
 
 public class Process {
+    private int id;
     private long arrivaltime;
     private long servicetime;
 
@@ -14,7 +15,8 @@ public class Process {
 
 
 
-    public Process(long arrivaltime, long servicetime) {
+    public Process(int id, long arrivaltime, long servicetime) {
+        this.id = id;
         this.arrivaltime = arrivaltime;
         this.servicetime = servicetime;
     }
@@ -27,12 +29,34 @@ public class Process {
         this.genTat = genTat;
     }
 
+    public Process(Process p) {
+        id = p.id;
+        arrivaltime = p.arrivaltime;
+        servicetime = p.servicetime;
+    }
+
     public void reset() {
         this.starttime = 0;
         this.endtime = 0;
         this.waittime = 0;
         this.tat = 0;
         this.genTat = 0;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setArrivaltime(long arrivaltime) {
+        this.arrivaltime = arrivaltime;
+    }
+
+    public void setServicetime(long servicetime) {
+        this.servicetime = servicetime;
     }
 
     public long getArrivaltime() {

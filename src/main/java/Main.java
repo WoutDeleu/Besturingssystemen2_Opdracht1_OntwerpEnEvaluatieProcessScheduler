@@ -1,8 +1,11 @@
 import Basics.Process;
 import Basics.ServiceTimeComparator;
 import Basics.XYLineChart_AWT;
+
 import Schedulers.FCFS;
 import Schedulers.SJF;
+import Schedulers.SRT;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -35,6 +38,7 @@ public class Main {
 
         // FCFS
 
+
         FCFS fcfs = new FCFS();
         List<Process> fcfs_res = new ArrayList<>(fcfs.schedule(processes3));
 
@@ -48,7 +52,6 @@ public class Main {
         plot(cluster, "FCFS");
 
 
-        for(Process p : processes3) p.reset();
 
         //2.SJN (=SPN)
         SJF sjf = new SJF();
@@ -63,6 +66,21 @@ public class Main {
 
         plot(cluster, "SJN/SPN");
 
+
+        for(Process p : processes3) p.reset();
+
+        //3.SRT
+        SRT srt = new SRT();
+        List<Process> srt_res = new ArrayList<>(srt.schedule(processes3));
+
+        Collections.sort(srt_res, new ServiceTimeComparator());
+        makeClusters(cluster, srt_res);
+
+        glob_par = calculate_averages(cluster);
+        System.out.println("3. SRT");
+        printResult(glob_par);
+
+        plot(cluster, "SRT");
 
 
     }
@@ -110,6 +128,7 @@ public class Main {
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 Element eElement = (Element) node;
                 processes.add(Integer.parseInt(eElement.getElementsByTagName("pid").item(0).getTextContent()) - 1, new Process(
+                        Integer.parseInt(eElement.getElementsByTagName("pid").item(0).getTextContent()),
                         Long.parseLong(eElement.getElementsByTagName("arrivaltime").item(0).getTextContent()),
                         Long.parseLong(eElement.getElementsByTagName("servicetime").item(0).getTextContent())));
             }
