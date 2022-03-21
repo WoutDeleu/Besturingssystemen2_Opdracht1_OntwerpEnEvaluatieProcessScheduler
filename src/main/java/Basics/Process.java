@@ -12,6 +12,7 @@ public class Process {
     private long waittime;
     private long tat;
     private long genTat;
+    private int timesScheduled;
 
 
 
@@ -106,4 +107,8 @@ public class Process {
     public long getEndtime() {
         return endtime;
     }
+
+    public void setTimesScheduled(int timesScheduled){this.timesScheduled = timesScheduled;}
+
+    public int getTimesScheduled() {return this.timesScheduled;}
 }

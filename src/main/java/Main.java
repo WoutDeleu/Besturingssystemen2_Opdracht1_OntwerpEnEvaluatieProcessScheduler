@@ -5,6 +5,7 @@ import Basics.XYLineChart_AWT;
 import Schedulers.FCFS;
 import Schedulers.SJF;
 import Schedulers.SRT;
+import Schedulers.RR;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -81,6 +82,12 @@ public class Main {
         printResult(glob_par);
 
         plot(cluster, "SRT");
+
+        //4. RR (q=2)
+        RR rr= new RR(2);
+        List<Process> rr_res = new ArrayList<>(####);
+
+
 
 
     }
