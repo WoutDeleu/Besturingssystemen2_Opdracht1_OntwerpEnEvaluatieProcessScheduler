@@ -6,13 +6,13 @@ public class Process {
     private int id;
     private long arrivaltime;
     private long servicetime;
+    private long bursttime;
 
     private long starttime;
     private long endtime;
     private long waittime;
     private long tat;
     private long genTat;
-    private int timesScheduled;
 
 
 
@@ -20,11 +20,13 @@ public class Process {
         this.id = id;
         this.arrivaltime = arrivaltime;
         this.servicetime = servicetime;
+        this.bursttime = servicetime;
     }
 
     public Process(long arrivaltime, long servicetime, long waittime, long tat, long genTat) {
         this.arrivaltime = arrivaltime;
         this.servicetime = servicetime;
+        this.bursttime = servicetime;
         this.waittime = waittime;
         this.tat = tat;
         this.genTat = genTat;
@@ -34,6 +36,7 @@ public class Process {
         id = p.id;
         arrivaltime = p.arrivaltime;
         servicetime = p.servicetime;
+        bursttime = p.bursttime;
     }
 
     public void reset() {
@@ -42,6 +45,7 @@ public class Process {
         this.waittime = 0;
         this.tat = 0;
         this.genTat = 0;
+        this.bursttime = 0;
     }
 
     public int getId() {
@@ -108,7 +112,10 @@ public class Process {
         return endtime;
     }
 
-    public void setTimesScheduled(int timesScheduled){this.timesScheduled = timesScheduled;}
-
-    public int getTimesScheduled() {return this.timesScheduled;}
+    public long getBursttime() {
+        return this.bursttime;
+    }
+    public void setBursttime( long bt){
+        this.bursttime=bt;
+    }
 }
