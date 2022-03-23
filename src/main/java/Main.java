@@ -5,7 +5,7 @@ import Basics.XYLineChart_AWT;
 import Schedulers.FCFS;
 import Schedulers.SJF;
 import Schedulers.SRT;
-//import Schedulers.RR;
+import Schedulers.RR;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -32,6 +32,7 @@ public class Main {
 
         List<Process> cluster = new ArrayList<>(100);
 
+        long[] glob_par;
 
         //SchedulingAlgorithms
 
@@ -39,6 +40,7 @@ public class Main {
 
         // FCFS
 
+        /*
 
         FCFS fcfs = new FCFS();
         List<Process> fcfs_res = new ArrayList<>(fcfs.schedule(processes3));
@@ -46,7 +48,7 @@ public class Main {
         Collections.sort(fcfs_res, new ServiceTimeComparator());
         makeClusters(cluster, fcfs_res);
 
-        long[] glob_par = calculate_averages(cluster);
+        glob_par = calculate_averages(cluster);
         System.out.println("1. FCFS");
         printResult(glob_par);
 
@@ -70,7 +72,9 @@ public class Main {
 
         for(Process p : processes3) p.reset();
 
-      //3.SRT
+        //3.SRT
+
+
         SRT srt = new SRT();
         List<Process> srt_res = new ArrayList<>(srt.schedule(processes3));
 
@@ -83,10 +87,49 @@ public class Main {
 
         plot(cluster, "SRT");
 
+         */
 
-//        //4. RR (q=2)
-//        RR rr= new RR(2);
-//        List<Process> rr_res = new ArrayList<>(####);
+        //4. RR (q=2)
+        RR rr2= new RR(2);
+        List<Process> rr_res2 = new ArrayList<>(rr2.schedule(processes3));
+
+        Collections.sort(rr_res2, new ServiceTimeComparator());
+        makeClusters(cluster, rr_res2);
+
+        glob_par = calculate_averages(cluster);
+        System.out.println("4. RR (tq=2)");
+        printResult(glob_par);
+
+        plot(cluster, "RR (tq=2)");
+
+
+        //5. RR (q=4)
+        RR rr4= new RR(4);
+        List<Process> rr_res4 = new ArrayList<>(rr4.schedule(processes3));
+
+        Collections.sort(rr_res4, new ServiceTimeComparator());
+        makeClusters(cluster, rr_res4);
+
+        glob_par = calculate_averages(cluster);
+        System.out.println("5. RR (tq=4)");
+        printResult(glob_par);
+
+        plot(cluster, "RR (tq=4)");
+
+
+
+        //6. RR (q=8)
+        RR rr8= new RR(8);
+        List<Process> rr_res8 = new ArrayList<>(rr8.schedule(processes3));
+
+        Collections.sort(rr_res8, new ServiceTimeComparator());
+        makeClusters(cluster, rr_res8);
+
+        glob_par = calculate_averages(cluster);
+        System.out.println("6. RR (tq=8)");
+        printResult(glob_par);
+
+        plot(cluster, "RR (tq=8)");
 
 
 
