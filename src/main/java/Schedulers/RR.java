@@ -1,3 +1,4 @@
+/*
 package Schedulers;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class RR {
         duur = tq;
     }
 
-    public List<Process> schedule(List<Process> Proc){
+    public List<Process> schedule(List<Process> Proc) {
         List<Process> AdjList = new ArrayList<>(Proc);
         long timer = AdjList.get(0).getArrivaltime();
 
@@ -55,3 +56,4 @@ public class RR {
     }
 
 }
+*/
