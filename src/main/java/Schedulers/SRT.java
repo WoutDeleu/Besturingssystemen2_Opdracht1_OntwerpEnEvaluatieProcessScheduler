@@ -30,7 +30,11 @@ public class SRT {
 
                     if (adjustableList.get(0).getServicetime() < temp.getServicetime()) {
                         //New process has shorter remaining time as other process
+                        //Matthieu: volgens mij moet ge geen nieuw process toevoegen ma gwn temp omdaje zo de referentie naar het object doorgeeft
+                        // als je een "new Process() doorgeeft wordt alles wa er daarna aan wordt gewijzigd niet doorgevoerd op het object in de lijst processes3
+                        ///////////////////////////////
                         waiting.add(new Process(temp));
+                        ///////////////////////////////
                         temp = adjustableList.get(0);
                         temp.setStarttime(timer);
                     }
