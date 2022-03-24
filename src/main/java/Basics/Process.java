@@ -115,6 +115,7 @@ public class Process {
     public long getBursttime() {
         return this.bursttime;
     }
+
     public void setBursttime( long bt){
         this.bursttime=bt;
     }

@@ -9,16 +9,16 @@ import Basics.Process;
 public class RR {
     private long duur;
     public RR(long tq) {
-        duur = tq*50;
+        duur = tq;
     }
     public List<Process> schedule(List<Process> Proc){
         Queue<Process> Q = new LinkedList<>();
         List<Process> AdjList = new ArrayList<>(Proc);
         long timer = AdjList.get(0).getArrivaltime();
 
-        Process Temp = new Process(AdjList.get(0));
+        Process Temp;
         AdjList.remove(0);
-        Q.add(Temp);
+        Q.add(AdjList.get(0));
 
         while(!AdjList.isEmpty() || !Q.isEmpty()){
             if(!Q.isEmpty()){
@@ -26,15 +26,14 @@ public class RR {
                 Q.remove();
                 if((Temp.getBursttime()-duur)>0){
                     Temp.setBursttime(Temp.getBursttime()-duur);
-                    Q.add(new Process(Temp));
-                    timer+=duur;
+                    Q.add(Temp);
+                    timer=timer+duur;
                 }
                 else{
-                    timer+=Temp.getBursttime();
+                    timer=timer+Temp.getBursttime();
                     Temp.setBursttime(0);
                     Temp.setEndtime(timer);
                 }
-
             }
             if(Q.isEmpty() && !AdjList.isEmpty()) {
                 timer = AdjList.get(0).getArrivaltime();

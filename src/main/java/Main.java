@@ -86,10 +86,12 @@ public class Main {
         printResult(glob_par);
 
         plot(cluster, "SRT");
+        for(Process p : processes3) p.reset();
 
          */
 
         //4. RR (q=2)
+        inlezenXML(processes1, processes2, processes3);
         RR rr2= new RR(2);
         List<Process> rr_res2 = new ArrayList<>(rr2.schedule(processes3));
 
@@ -104,6 +106,7 @@ public class Main {
 
 
         //5. RR (q=4)
+        inlezenXML(processes1, processes2, processes3);
         RR rr4= new RR(4);
         List<Process> rr_res4 = new ArrayList<>(rr4.schedule(processes3));
 
@@ -119,6 +122,7 @@ public class Main {
 
 
         //6. RR (q=8)
+        inlezenXML(processes1, processes2, processes3);
         RR rr8= new RR(8);
         List<Process> rr_res8 = new ArrayList<>(rr8.schedule(processes3));
 
