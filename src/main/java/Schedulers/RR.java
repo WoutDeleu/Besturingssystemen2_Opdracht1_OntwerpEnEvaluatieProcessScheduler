@@ -12,21 +12,21 @@ public class RR {
         duur = tq;
     }
     public List<Process> schedule(List<Process> Proc){
-        Queue<Process> Q = new LinkedList<>();
-        List<Process> AdjList = new ArrayList<>(Proc);
-        long timer = AdjList.get(0).getArrivaltime();
+        Queue<Process> q = new LinkedList<>();
+        List<Process> adjList = new ArrayList<>(Proc);
+        long timer = adjList.get(0).getArrivaltime();
 
         Process Temp;
-        AdjList.remove(0);
-        Q.add(AdjList.get(0));
+        adjList.remove(0);
+        q.add(adjList.get(0));
 
-        while(!AdjList.isEmpty() || !Q.isEmpty()){
-            if(!Q.isEmpty()){
-                Temp=Q.peek();
-                Q.remove();
+        while(!adjList.isEmpty() || !q.isEmpty()){
+            if(!q.isEmpty()){
+                Temp= q.peek();
+                q.remove();
                 if((Temp.getBursttime()-duur)>0){
                     Temp.setBursttime(Temp.getBursttime()-duur);
-                    Q.add(Temp);
+                    q.add(Temp);
                     timer=timer+duur;
                 }
                 else{
@@ -35,14 +35,14 @@ public class RR {
                     Temp.setEndtime(timer);
                 }
             }
-            if(Q.isEmpty() && !AdjList.isEmpty()) {
-                timer = AdjList.get(0).getArrivaltime();
+            if(q.isEmpty() && !adjList.isEmpty()) {
+                timer = adjList.get(0).getArrivaltime();
             }
 
-            while(!AdjList.isEmpty() && AdjList.get(0).getArrivaltime()<=timer){
-                AdjList.get(0).setStarttime(timer);
-                Q.add(AdjList.get(0));
-                AdjList.remove(0);
+            while(!adjList.isEmpty() && adjList.get(0).getArrivaltime()<=timer){
+                adjList.get(0).setStarttime(timer);
+                q.add(adjList.get(0));
+                adjList.remove(0);
             }
         }
 

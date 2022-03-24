@@ -40,7 +40,7 @@ public class Main {
 
         // FCFS
 
-        /*
+
 
         FCFS fcfs = new FCFS();
         List<Process> fcfs_res = new ArrayList<>(fcfs.schedule(processes3));
@@ -88,7 +88,7 @@ public class Main {
         plot(cluster, "SRT");
         for(Process p : processes3) p.reset();
 
-         */
+
 
         //4. RR (q=2)
         inlezenXML(processes1, processes2, processes3);
