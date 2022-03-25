@@ -40,8 +40,7 @@ public class Main {
 
         // FCFS
 
-
-
+        /*
         FCFS fcfs = new FCFS();
         List<Process> fcfs_res = new ArrayList<>(fcfs.schedule(processes3));
 
@@ -53,6 +52,8 @@ public class Main {
         printResult(glob_par);
 
         plot(cluster, "FCFS");
+        for(Process p : processes3) p.reset();
+
 
 
 
@@ -90,8 +91,8 @@ public class Main {
 
 
 
+         */
         //4. RR (q=2)
-        inlezenXML(processes1, processes2, processes3);
         RR rr2= new RR(2);
         List<Process> rr_res2 = new ArrayList<>(rr2.schedule(processes3));
 
@@ -103,10 +104,9 @@ public class Main {
         printResult(glob_par);
 
         plot(cluster, "RR (tq=2)");
-
+        for(Process p : processes3) p.reset();
 
         //5. RR (q=4)
-        inlezenXML(processes1, processes2, processes3);
         RR rr4= new RR(4);
         List<Process> rr_res4 = new ArrayList<>(rr4.schedule(processes3));
 
@@ -118,11 +118,11 @@ public class Main {
         printResult(glob_par);
 
         plot(cluster, "RR (tq=4)");
+        for(Process p : processes3) p.reset();
 
 
 
         //6. RR (q=8)
-        inlezenXML(processes1, processes2, processes3);
         RR rr8= new RR(8);
         List<Process> rr_res8 = new ArrayList<>(rr8.schedule(processes3));
 
@@ -134,8 +134,7 @@ public class Main {
         printResult(glob_par);
 
         plot(cluster, "RR (tq=8)");
-
-
+        for(Process p : processes3) p.reset();
 
 
     }

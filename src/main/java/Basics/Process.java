@@ -45,7 +45,7 @@ public class Process {
         this.waittime = 0;
         this.tat = 0;
         this.genTat = 0;
-        this.bursttime = 0;
+        this.bursttime = this.servicetime;
     }
 
     public int getId() {

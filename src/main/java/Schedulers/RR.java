@@ -16,23 +16,22 @@ public class RR {
         List<Process> adjList = new ArrayList<>(Proc);
         long timer = adjList.get(0).getArrivaltime();
 
-        Process Temp;
-        adjList.remove(0);
-        q.add(adjList.get(0));
+        Process temp;
+
 
         while(!adjList.isEmpty() || !q.isEmpty()){
             if(!q.isEmpty()){
-                Temp= q.peek();
+                temp= q.peek();
                 q.remove();
-                if((Temp.getBursttime()-duur)>0){
-                    Temp.setBursttime(Temp.getBursttime()-duur);
-                    q.add(Temp);
+                if((temp.getBursttime()-duur)>0){
+                    temp.setBursttime(temp.getBursttime()-duur);
+                    q.add(temp);
                     timer=timer+duur;
                 }
                 else{
-                    timer=timer+Temp.getBursttime();
-                    Temp.setBursttime(0);
-                    Temp.setEndtime(timer);
+                    timer=timer+temp.getBursttime();
+                    temp.setBursttime(0);
+                    temp.setEndtime(timer);
                 }
             }
             if(q.isEmpty() && !adjList.isEmpty()) {
