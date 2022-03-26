@@ -18,7 +18,6 @@ public class RR {
 
         Process temp;
 
-
         while(!adjList.isEmpty() || !q.isEmpty()){
             if(!q.isEmpty()){
                 temp= q.peek();

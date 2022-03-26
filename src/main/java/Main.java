@@ -36,7 +36,7 @@ public class Main {
         //1. Schedulers
 
         // FCFS
-
+        /*
 
         FCFS fcfs = new FCFS();
         List<Process> fcfs_res = new ArrayList<>(fcfs.schedule(processes3));
@@ -70,11 +70,12 @@ public class Main {
 
         for(Process p : processes3) p.reset();
 
+        */
+
         //3.SRT
 
-/*
 
-        SRTv3 srt = new SRTv3();
+        SRT srt = new SRT();
         List<Process> srt_res = new ArrayList<>(srt.schedule(processes3));
 
         Collections.sort(srt_res, new ServiceTimeComparator());
@@ -87,9 +88,8 @@ public class Main {
         plot(cluster, "SRT");
         for(Process p : processes3) p.reset();
 
-*/
 
-
+        /*
         //4. RR (q=2)
         RR rr2= new RR(2);
         List<Process> rr_res2 = new ArrayList<>(rr2.schedule(processes3));
@@ -134,6 +134,8 @@ public class Main {
         plot(cluster, "RR (tq=8)");
         for(Process p : processes3) p.reset();
 
+
+         */
 
     }
 
