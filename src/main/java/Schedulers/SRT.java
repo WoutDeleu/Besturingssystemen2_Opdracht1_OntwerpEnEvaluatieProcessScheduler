@@ -17,15 +17,16 @@ public class SRT {
         long timer = adjustableList.get(0).getArrivaltime();
 
         Process current = new Process(adjustableList.get(0));
+        current.setStarttime(timer);
         adjustableList.remove(0);
 
 
         //FOUT::: Bij bepaalde vult hij de endtijd niet in?? Starttime wordt wel ingevuld!!!!
         while(!adjustableList.isEmpty() || !waiting.isEmpty()) {
             if(waiting.isEmpty()) {
-                if (isNextProcessFirst(adjustableList, current, timer)) {
+                if (isNextArrivalFirst(adjustableList, current, timer)) {
                     //A new process is being added to the queue
-                    current.setServicetime(current.getServicetime() - (adjustableList.get(0).getArrivaltime() - timer));
+                    updateCurrent(current, timer, adjustableList);
                     timer = adjustableList.get(0).getArrivaltime();
 
                     if (adjustableList.get(0).getServicetime() < current.getServicetime()) {
@@ -34,8 +35,8 @@ public class SRT {
                     }
                     else {
                         waiting.add(adjustableList.get(0));
+                        adjustableList.remove(0);
                     }
-                    adjustableList.remove(0);
                 }
                 else {
                     //current process is being finished
@@ -55,9 +56,9 @@ public class SRT {
 
             }
             else {
-                if (isNextProcessFirst(adjustableList, current, timer)) {
+                if (isNextArrivalFirst(adjustableList, current, timer)) {
                     //A new process is being added to the queue
-                    current.setServicetime(current.getServicetime() - (adjustableList.get(0).getArrivaltime() - timer));
+                    updateCurrent(current, timer, adjustableList);
                     timer = adjustableList.get(0).getArrivaltime();
 
                     if (adjustableList.get(0).getServicetime() < current.getServicetime()) {
@@ -66,8 +67,8 @@ public class SRT {
                     }
                     else {
                         waiting.add(adjustableList.get(0));
+                        adjustableList.remove(0);
                     }
-                    adjustableList.remove(0);
                 }
                 else {
                     //current process is being finished
@@ -84,13 +85,22 @@ public class SRT {
         return processes;
     }
 
-    private boolean isNextProcessFirst(List<Process> adjustableList, Process current, long timer) {
-        return (adjustableList.get(0).getArrivaltime() - timer) <= current.getServicetime();
+
+    private boolean isNextArrivalFirst(List<Process> adjustableList, Process current, long timer) {
+        long time_nextArrival = adjustableList.get(0).getArrivaltime()-timer;
+        long time_currentFinish = current.getServicetime();
+        if(time_nextArrival < time_currentFinish) return true;
+        else return false;
     }
     private void replaceCurrent(Process current, Queue<Process> waiting, List<Process> adjustableList, long timer) {
         waiting.add(new Process(current));
-        current = adjustableList.get(0);
+        current = new Process(adjustableList.get(0));
         current.setStarttime(timer);
+        adjustableList.remove(0);
+    }
+
+    private void updateCurrent(Process current, long timer, List<Process> adjustableList) {
+        current.setServicetime(current.getServicetime() - (adjustableList.get(0).getArrivaltime() + timer));
     }
 
     private void finishCurrent(List<Process> processes, Process current, long timer) {
@@ -103,8 +113,9 @@ public class SRT {
         for(Process p : waiting) {
             if(p.getServicetime() <= shortest.getServicetime()) shortest = p;
         }
+        Process ret = new Process(shortest);
         waiting.remove(shortest);
-        return shortest;
+        return ret;
     }
 
     private void calculateValues(List<Process> processes) {

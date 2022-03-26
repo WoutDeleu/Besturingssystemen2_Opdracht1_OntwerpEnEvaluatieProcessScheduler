@@ -119,4 +119,12 @@ public class Process {
     public void setBursttime( long bt){
         this.bursttime=bt;
     }
+
+    public void decreaseService() {
+        servicetime--;
+    }
+
+    public boolean isDone() {
+        return servicetime == 0;
+    }
 }

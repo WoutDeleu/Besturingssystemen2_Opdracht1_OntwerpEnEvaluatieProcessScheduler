@@ -2,10 +2,7 @@ import Basics.Process;
 import Basics.ServiceTimeComparator;
 import Basics.XYLineChart_AWT;
 
-import Schedulers.FCFS;
-import Schedulers.SJF;
-import Schedulers.SRT;
-import Schedulers.RR;
+import Schedulers.*;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -40,7 +37,7 @@ public class Main {
 
         // FCFS
 
-        /*
+
         FCFS fcfs = new FCFS();
         List<Process> fcfs_res = new ArrayList<>(fcfs.schedule(processes3));
 
@@ -76,7 +73,7 @@ public class Main {
         //3.SRT
 
 
-        SRT srt = new SRT();
+        SRTv3 srt = new SRTv3();
         List<Process> srt_res = new ArrayList<>(srt.schedule(processes3));
 
         Collections.sort(srt_res, new ServiceTimeComparator());
@@ -91,7 +88,6 @@ public class Main {
 
 
 
-         */
         //4. RR (q=2)
         RR rr2= new RR(2);
         List<Process> rr_res2 = new ArrayList<>(rr2.schedule(processes3));
