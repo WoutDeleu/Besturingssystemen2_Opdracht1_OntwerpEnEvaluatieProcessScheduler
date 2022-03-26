@@ -72,6 +72,7 @@ public class Main {
 
         //3.SRT
 
+/*
 
         SRTv3 srt = new SRTv3();
         List<Process> srt_res = new ArrayList<>(srt.schedule(processes3));
@@ -86,6 +87,7 @@ public class Main {
         plot(cluster, "SRT");
         for(Process p : processes3) p.reset();
 
+*/
 
 
         //4. RR (q=2)
