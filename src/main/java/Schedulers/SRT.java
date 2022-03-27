@@ -41,14 +41,15 @@ public class SRT {
                 else {
                     long time = adjustableList.get(0).getArrivaltime()-timer;
                     if(q.isEmpty()) {
-                        current.setBursttime(current.getBursttime()-time);
+                        if((current.getBursttime()-time)>=0){
+                            current.setBursttime(current.getBursttime()-time);
+                        }
+                        else {
+                            current.setBursttime(0);
+                        }
                         timer=timer+time;
                     }
                     else{
-
-                        //op een of andere manier kan endtime vroeger zijn dan de starttime waardoor de waittime negatief kan worden
-                        //zelfs al bij 3e process
-                        //debuggen en kijken naar moment waarop starttime en endtimes geset worden
                         while(time>0 && !q.isEmpty()){
                             if(current.getBursttime()<=time){
                                 current.setEndtime(timer+ current.getBursttime());
