@@ -5,6 +5,11 @@ import Schedulers.*;
 public class Process {
     private int id;
     private long arrivaltime;
+
+    public Process() {
+        //System.out.println("fault is being made, this should not be called!");
+    }
+
     private long servicetime;
     private long bursttime;
 
@@ -30,6 +35,15 @@ public class Process {
         this.waittime = waittime;
         this.tat = tat;
         this.genTat = genTat;
+    }
+
+    public Process(int id, long arrivaltime, long servicetime, long bursttime, long starttime, long endtime) {
+        this.id = id;
+        this.arrivaltime = arrivaltime;
+        this.servicetime = servicetime;
+        this.bursttime = bursttime;
+        this.starttime = starttime;
+        this.endtime = endtime;
     }
 
     public Process(Process p) {

@@ -25,7 +25,9 @@ public class Main {
         List<Process> processes1 = new ArrayList<>(10000);
         List<Process> processes2 = new ArrayList<>(20000);
         List<Process> processes3 = new ArrayList<>(50000);
+        List<Process> test = new ArrayList<>(5);
         inlezenXML(processes1, processes2, processes3);
+        inlezenXMLtest(test);
 
         List<Process> cluster = new ArrayList<>(100);
 
@@ -36,6 +38,7 @@ public class Main {
         //1. Schedulers
 
         // FCFS
+
         /*
 
         FCFS fcfs = new FCFS();
@@ -70,7 +73,7 @@ public class Main {
 
         for(Process p : processes3) p.reset();
 
-        */
+
 
         //3.SRT
 
@@ -89,7 +92,7 @@ public class Main {
         for(Process p : processes3) p.reset();
 
 
-        /*
+
         //4. RR (q=2)
         RR rr2= new RR(2);
         List<Process> rr_res2 = new ArrayList<>(rr2.schedule(processes3));
@@ -137,6 +140,46 @@ public class Main {
 
          */
 
+        //7. HRRN
+        HRRN rr8= new HRRN();
+        List<Process> hrrn_res = new ArrayList<>(rr8.schedule(processes3));
+
+        Collections.sort(hrrn_res, new ServiceTimeComparator());
+        makeClusters(cluster, hrrn_res);
+
+        glob_par = calculate_averages(cluster);
+        System.out.println("7. HRRN");
+        printResult(glob_par);
+
+        plot(cluster, "HRRN");
+        for(Process p : processes3) p.reset();
+
+    }
+
+    private static void inlezenXMLtest(List<Process> test) {
+        try {
+
+            File file1 = new File("src/main/java/Data/processen5.xml");
+
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc1 = db.parse(file1);
+
+            doc1.getDocumentElement().normalize();
+            //System.out.println("Root element: " + doc1.getDocumentElement().getNodeName());
+
+            NodeList nodeList1 = doc1.getElementsByTagName("process");
+
+            addProcesses(nodeList1, test);
+        }
+        catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
     }
 
 
