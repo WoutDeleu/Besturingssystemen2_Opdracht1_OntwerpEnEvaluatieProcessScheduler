@@ -11,9 +11,9 @@ public class RR {
     public RR(long tq) {
         duur = tq;
     }
-    public List<Process> schedule(List<Process> Proc){
+    public List<Process> schedule(List<Process> proc){
         Queue<Process> q = new LinkedList<>();
-        List<Process> adjList = new ArrayList<>(Proc);
+        List<Process> adjList = new ArrayList<>(proc);
         long timer = adjList.get(0).getArrivaltime();
 
         Process temp;
@@ -44,8 +44,8 @@ public class RR {
             }
         }
 
-        calculateValues(Proc);
-        return Proc;
+        calculateValues(proc);
+        return proc;
     }
 
     private void calculateValues(List<Process> processes) {

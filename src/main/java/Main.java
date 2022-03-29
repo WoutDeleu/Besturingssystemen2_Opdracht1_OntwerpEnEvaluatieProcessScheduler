@@ -2,8 +2,7 @@ import Basics.Process;
 import Basics.ServiceTimeComparator;
 import Basics.XYLineChart_AWT;
 
-import Schedulers.*;
-
+import Schedulers.MLFB;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -124,8 +123,8 @@ public class Main {
 
 
         //6. RR (q=8)
-        RR rr8= new RR(8);
-        List<Process> rr_res8 = new ArrayList<>(rr8.schedule(processes3));
+        RR mlfb1= new RR(8);
+        List<Process> rr_res8 = new ArrayList<>(mlfb1.schedule(processes3));
 
         Collections.sort(rr_res8, new ServiceTimeComparator());
         makeClusters(cluster, rr_res8);
@@ -138,14 +137,14 @@ public class Main {
         for(Process p : processes3) p.reset();
 
 
-         */
+
 
         //7. HRRN
-        HRRN rr8= new HRRN();
-        List<Process> hrrn_res = new ArrayList<>(rr8.schedule(processes3));
+        HRRN mlfb1= new HRRN();
+        List<Process> mlfb8_res = new ArrayList<>(mlfb1.schedule(processes3));
 
-        Collections.sort(hrrn_res, new ServiceTimeComparator());
-        makeClusters(cluster, hrrn_res);
+        Collections.sort(mlfb8_res, new ServiceTimeComparator());
+        makeClusters(cluster, mlfb8_res);
 
         glob_par = calculate_averages(cluster);
         System.out.println("7. HRRN");
@@ -153,6 +152,27 @@ public class Main {
 
         plot(cluster, "HRRN");
         for(Process p : processes3) p.reset();
+
+         */
+
+
+        //8. MLFB
+        long timeslice1 = 8;
+
+        MLFB mlfb1 = new MLFB(timeslice1);
+        List<Process> mlfb8_res = new ArrayList<>(mlfb1.schedule(processes3));
+
+        Collections.sort(mlfb8_res, new ServiceTimeComparator());
+        makeClusters(cluster, mlfb8_res);
+
+        glob_par = calculate_averages(cluster);
+        System.out.println("8. MLFB1");
+        printResult(glob_par);
+
+        plot(cluster, "MLFB1");
+        for(Process p : processes3) p.reset();
+
+
 
     }
 

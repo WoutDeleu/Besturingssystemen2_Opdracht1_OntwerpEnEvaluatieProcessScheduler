@@ -21,7 +21,6 @@ public class HRRN {
 
         while(true) {
 
-
             timer = updateTimer(timer, current);
             finish(current, finished, timer);
 
